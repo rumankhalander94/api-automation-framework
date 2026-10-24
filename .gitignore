@@ -6,4 +6,4 @@ target/
 *.iml
 
 # macOS
-.DS_Store
+.DS_Storegh auth login

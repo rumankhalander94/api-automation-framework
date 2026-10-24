@@ -1,0 +1,11 @@
+<!DOCTYPE suite SYSTEM "https://testng.org/testng-1.0.dtd">
+<suite name="PetstoreSuite">
+    <test name="PetstoreApiTests">
+        <classes>
+            <class name="com.automation.petstore.tests.PetTests"/>
+            <class name="com.automation.petstore.tests.StoreTests"/>
+            <class name="com.automation.petstore.tests.UserTests"/>
+            <class name="com.automation.petstore.tests.NegativeTests"/>
+        </classes>
+    </test>
+</suite>

@@ -7,3 +7,5 @@ target/
 
 # macOS
 .DS_Storegh auth login
+
+allure-results/

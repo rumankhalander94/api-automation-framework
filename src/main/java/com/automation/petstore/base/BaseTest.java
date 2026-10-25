@@ -1,5 +1,6 @@
 package com.automation.petstore.base;
 
+import io.qameta.allure.restassured.AllureRestAssured;
 import io.restassured.RestAssured;
 import io.restassured.builder.RequestSpecBuilder;
 import io.restassured.http.ContentType;
@@ -17,6 +18,8 @@ public class BaseTest {
 
         requestSpec = new RequestSpecBuilder()
                 .setContentType(ContentType.JSON)
+                .addFilter(new AllureRestAssured())
                 .build();
+
     }
 }

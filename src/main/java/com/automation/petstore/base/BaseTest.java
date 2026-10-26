@@ -12,7 +12,7 @@ public class BaseTest {
 
     protected static RequestSpecification requestSpec;
 
-    @BeforeClass
+    @BeforeClass(alwaysRun = true)
     public void setup() {
         RestAssured.baseURI = ConfigManager.get("base.url");
 

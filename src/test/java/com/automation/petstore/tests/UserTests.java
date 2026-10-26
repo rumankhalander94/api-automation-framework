@@ -9,13 +9,12 @@ import org.testng.annotations.Test;
 import static com.automation.petstore.endpoints.Endpoints.USER;
 import static com.automation.petstore.endpoints.Endpoints.USER_BY_USERNAME;
 import static io.restassured.RestAssured.given;
-import static io.restassured.RestAssured.when;
 
 public class UserTests extends BaseTest {
 
     private String username;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createTestUser() {
         // Unique username per run: fixed prefix + timestamp
         username = "testuser_" + System.currentTimeMillis();
@@ -40,7 +39,7 @@ public class UserTests extends BaseTest {
                 .statusCode(200);
     }
 
-    @Test
+    @Test(groups = {"smoke", "regression"})
     public void fetchUser_returnsCorrectUser() {
         User fetchedUser =
                 given()
@@ -58,7 +57,7 @@ public class UserTests extends BaseTest {
         Assert.assertEquals(fetchedUser.getEmail(), username + "@example.com");
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void deleteUser_returns200() {
         given()
                 .spec(requestSpec)

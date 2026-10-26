@@ -17,7 +17,7 @@ public class PetTests extends BaseTest {
 
     private long petId;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createTestPet() {
         petId = System.currentTimeMillis();
 
@@ -32,7 +32,7 @@ public class PetTests extends BaseTest {
                 .statusCode(200);
     }
 
-    @Test
+    @Test(groups = {"smoke", "regression"})
     public void fetchPet_returnsCorrectPet() {
         Pet fetchedPet =
                 given()
@@ -49,7 +49,7 @@ public class PetTests extends BaseTest {
         Assert.assertEquals(fetchedPet.getStatus(), "available");
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void updatePet_returns200() {
         Pet updatedPet = new Pet(petId, "doggie", "sold");
 
@@ -63,7 +63,7 @@ public class PetTests extends BaseTest {
                 .body("status", equalTo("sold"));
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void findPetsByStatus_returnsOnlyMatchingStatus() {
         given()
                 .spec(requestSpec)
@@ -75,7 +75,7 @@ public class PetTests extends BaseTest {
                 .body("status", everyItem(equalTo("available")));
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void deletePet_returns200() {
         given()
                 .spec(requestSpec)

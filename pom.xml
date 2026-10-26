@@ -18,6 +18,7 @@
         <!-- NEW -->
         <allure.version>2.29.1</allure.version>
         <aspectj.version>1.9.22</aspectj.version>
+        <suiteFile>testng.xml</suiteFile>
     </properties>
 
     <!-- NEW: keeps all Allure artifacts on the same version -->
@@ -79,7 +80,7 @@
                 <version>3.3.0</version>
                 <configuration>
                     <suiteXmlFiles>
-                        <suiteXmlFile>testng.xml</suiteXmlFile>
+                        <suiteXmlFile>${suiteFile}</suiteXmlFile>
                     </suiteXmlFiles>
                     <!-- NEW: AspectJ agent so Allure can hook into test steps -->
                     <argLine>

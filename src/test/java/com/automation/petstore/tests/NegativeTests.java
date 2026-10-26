@@ -13,7 +13,7 @@ import static io.restassured.RestAssured.given;
 
 public class NegativeTests extends BaseTest {
 
-    @Test
+    @Test(groups = {"negative"})
     public void getPet_nonExistentId_returns404() {
         long nonExistentId = Math.abs(UUID.randomUUID().getMostSignificantBits());
 
@@ -32,7 +32,7 @@ public class NegativeTests extends BaseTest {
         Assert.assertEquals(error.getMessage(), "Pet not found");
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void getUser_nonExistentUsername_returns404() {
         String nonExistentUser = "no_such_user_" + System.currentTimeMillis();
 
@@ -51,7 +51,7 @@ public class NegativeTests extends BaseTest {
         Assert.assertEquals(error.getMessage(), "User not found");
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void getOrder_outOfRangeId_returns404() {
         long outOfRangeOrderId = 100;
 
@@ -70,7 +70,7 @@ public class NegativeTests extends BaseTest {
         Assert.assertEquals(error.getMessage(), "Order not found");
     }
 
-    @Test
+    @Test(groups = {"negative"})
     public void deletePet_twice_secondCallReturns404() {
         long petId = System.currentTimeMillis();
 

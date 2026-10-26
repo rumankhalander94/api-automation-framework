@@ -14,7 +14,7 @@ public class StoreTests extends BaseTest {
     private long orderId;
     private long petId = 10L;
 
-    @BeforeMethod
+    @BeforeMethod(alwaysRun = true)
     public void createTestOrder() {
         // Runs before EVERY @Test method, giving each one a fresh, known pet.
         orderId = System.currentTimeMillis(); // unique ID per run, avoids collisions
@@ -30,7 +30,7 @@ public class StoreTests extends BaseTest {
                 .statusCode(200);
     }
 
-    @Test
+    @Test(groups = {"smoke", "regression"})
     public void fetchOrder_returnsCorrectOrder() {
         Order fetchedOrder =
                 given()
@@ -46,7 +46,7 @@ public class StoreTests extends BaseTest {
         Assert.assertEquals(fetchedOrder.getStatus(), "placed");
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void deleteOrder_returns200() {
         given()
                 .spec(requestSpec)
@@ -57,7 +57,7 @@ public class StoreTests extends BaseTest {
                 .statusCode(200);
     }
 
-    @Test
+    @Test(groups = {"regression"})
     public void getInventory_returns200() {
         given()
                 .spec(requestSpec)

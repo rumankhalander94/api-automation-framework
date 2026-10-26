@@ -4,7 +4,10 @@ import com.automation.petstore.base.BaseTest;
 import com.automation.petstore.models.Pet;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.UUID;
 
 import static com.automation.petstore.endpoints.Endpoints.PET;
 import static com.automation.petstore.endpoints.Endpoints.PET_BY_ID;
@@ -84,5 +87,30 @@ public class PetTests extends BaseTest {
                 .delete(PET_BY_ID)
                 .then()
                 .statusCode(200);
+    }
+
+    @DataProvider(name = "petStatuses")
+    public Object[][] petStatuses() {
+        return new Object[][] {
+                {"available"},
+                {"pending"},
+                {"sold"}
+        };
+    }
+
+    @Test(dataProvider = "petStatuses", groups = {"regression"})
+    public void createPet_withStatus_returnsSameStatus(String status) {
+        long id = Math.abs(UUID.randomUUID().getMostSignificantBits());
+
+        Pet pet = new Pet(id, "doggie", status);
+
+        given()
+                .spec(requestSpec)
+                .body(pet)
+                .when()
+                .post(PET)
+                .then()
+                .statusCode(200)
+                .body("status", equalTo(status));
     }
 }

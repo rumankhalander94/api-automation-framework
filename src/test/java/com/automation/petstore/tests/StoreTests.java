@@ -4,10 +4,14 @@ import com.automation.petstore.base.BaseTest;
 import com.automation.petstore.models.Order;
 import org.testng.Assert;
 import org.testng.annotations.BeforeMethod;
+import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
+
+import java.util.UUID;
 
 import static com.automation.petstore.endpoints.Endpoints.*;
 import static io.restassured.RestAssured.given;
+import static org.hamcrest.Matchers.equalTo;
 
 public class StoreTests extends BaseTest {
 
@@ -65,5 +69,30 @@ public class StoreTests extends BaseTest {
                 .get(STORE_INVENTORY)
                 .then()
                 .statusCode(200);
+    }
+
+    @DataProvider(name = "orderStatuses")
+    public Object[][] orderStatuses() {
+        return new Object[][] {
+                {"placed"},
+                {"approved"},
+                {"delivered"}
+        };
+    }
+
+    @Test(dataProvider = "orderStatuses", groups = {"regression"})
+    public void createOrder_withStatus_returnsSameStatus(String status) {
+        long id = Math.abs(UUID.randomUUID().getMostSignificantBits());
+
+        Order order = new Order(id, petId, 1, "2025-01-01T00:00:00.000Z", false, status);
+
+        given()
+                .spec(requestSpec)
+                .body(order)
+                .when()
+                .post(STORE_ORDER)
+                .then()
+                .statusCode(200)
+                .body("status", equalTo(status));
     }
 }

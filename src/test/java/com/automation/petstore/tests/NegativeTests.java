@@ -53,7 +53,7 @@ public class NegativeTests extends BaseTest {
 
     @Test(groups = {"negative"})
     public void getOrder_outOfRangeId_returns404() {
-        long outOfRangeOrderId = 100;
+        long outOfRangeOrderId = 100_000 + Math.abs(UUID.randomUUID().getMostSignificantBits() % 900_000);
 
         ApiResponse error =
                 given()

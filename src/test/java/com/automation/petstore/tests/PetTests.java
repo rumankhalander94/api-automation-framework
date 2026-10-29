@@ -3,6 +3,7 @@ package com.automation.petstore.tests;
 import com.automation.petstore.base.BaseTest;
 import com.automation.petstore.clients.PetClient;
 import com.automation.petstore.models.Pet;
+import io.restassured.response.Response;
 import org.testng.Assert;
 import org.testng.annotations.BeforeClass;
 import org.testng.annotations.BeforeMethod;
@@ -28,9 +29,16 @@ public class PetTests extends BaseTest {
     @BeforeMethod(alwaysRun = true)
     public void createTestPet() {
         petId = System.currentTimeMillis();
-        petClient.create(new Pet(petId, "doggie", "available"))
-                .then()
-                .statusCode(200);
+        Pet pet = new Pet(petId, "doggie", "available");
+
+        Response response = com.automation.petstore.utils.RetryUtil.retryUntilStatus(
+                () -> petClient.create(pet),
+                200,
+                3,
+                1000
+        );
+
+        response.then().statusCode(200);
     }
 
     @Test(groups = {"smoke", "regression"})

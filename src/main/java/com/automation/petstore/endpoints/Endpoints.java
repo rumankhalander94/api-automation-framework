@@ -10,6 +10,7 @@ public final class Endpoints {
     public static final String PET = "/pet";
     public static final String PET_BY_ID = "/pet/{petId}";
     public static final String PET_FIND_BY_STATUS = "/pet/findByStatus";
+    public static final String PET_UPLOAD_IMAGE = "/pet/{petId}/uploadFile";
 
     // Store
     public static final String STORE_ORDER = "/store/order";

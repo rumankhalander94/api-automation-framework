@@ -9,10 +9,11 @@ import org.testng.annotations.BeforeMethod;
 import org.testng.annotations.DataProvider;
 import org.testng.annotations.Test;
 
+import java.io.File;
+import java.net.URL;
 import java.util.UUID;
 
-import static org.hamcrest.Matchers.equalTo;
-import static org.hamcrest.Matchers.everyItem;
+import static org.hamcrest.Matchers.*;
 
 public class PetTests extends BaseTest {
 
@@ -87,4 +88,17 @@ public class PetTests extends BaseTest {
                 .body("status", equalTo(status));
     }
 
+    @Test(groups = {"regression"}, enabled = false)
+    public void uploadPetImage_returns200() {
+        // Disabled: petstore.swagger.io's /pet/{petId}/uploadFile endpoint
+        // returns a generic 404 even for valid requests (confirmed independently via curl).
+        // This appears to be a server-side issue with the public sandbox, not a client bug.
+        URL fileUrl = getClass().getClassLoader().getResource("test-pet-photo.txt");
+        File file = new File(fileUrl.getFile());
+
+        petClient.uploadImage(petId, file)
+                .then()
+                .statusCode(200)
+                .body("message", containsString("File uploaded"));
+    }
 }

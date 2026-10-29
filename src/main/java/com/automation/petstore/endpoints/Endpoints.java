@@ -20,4 +20,6 @@ public final class Endpoints {
     // User
     public static final String USER = "/user";
     public static final String USER_BY_USERNAME = "/user/{username}";
+    public static final String USER_LOGIN = "/user/login";
+    public static final String USER_LOGOUT = "/user/logout";
 }

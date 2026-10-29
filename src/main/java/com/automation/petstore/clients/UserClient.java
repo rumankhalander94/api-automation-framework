@@ -39,4 +39,20 @@ public class UserClient {
                 .delete(USER_BY_USERNAME);
     }
 
+    public Response login(String username, String password) {
+        return given()
+                .spec(spec)
+                .queryParam("username", username)
+                .queryParam("password", password)
+                .when()
+                .get(USER_LOGIN);
+    }
+
+    public Response logout() {
+        return given()
+                .spec(spec)
+                .when()
+                .get(USER_LOGOUT);
+    }
+
 }

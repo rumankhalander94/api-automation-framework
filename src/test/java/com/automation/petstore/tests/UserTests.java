@@ -8,6 +8,8 @@
     import org.testng.annotations.BeforeMethod;
     import org.testng.annotations.Test;
 
+    import static org.hamcrest.Matchers.notNullValue;
+
     public class UserTests extends BaseTest {
 
         private String username;
@@ -52,6 +54,21 @@
         @Test(groups = {"regression"})
         public void deleteUser_returns200() {
             userClient.delete(username)
+                    .then()
+                    .statusCode(200);
+        }
+
+        @Test(groups = {"regression"})
+        public void loginUser_returns200AndRateLimitHeader() {
+            userClient.login(username, "Password123")
+                    .then()
+                    .statusCode(200)
+                    .header("X-Rate-Limit", notNullValue());
+        }
+
+        @Test(groups = {"regression"})
+        public void logoutUser_returns200() {
+            userClient.logout()
                     .then()
                     .statusCode(200);
         }
